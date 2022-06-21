@@ -27,16 +27,55 @@ function togglePlay() {
 
 // creating function to update button when played
 function updateButton() {
-  const icon = this.paused ? '►' : '❚ ❚';
+  const icon = this.paused ? '►' : '❚❚';
   toggle.textContent = icon;
 }
 
-// create handleRangeUpdate function for volume control
+// create a function to change volume when slider is moved
+function handleRangeUpdate() {
+  video[this.name] = this.value;
+}
+ 
+// create a function to go back 10 seconds when button is clicked
+function skip() {
+  video.currentTime += parseFloat(this.dataset.skip);
+}
+
+// create a function to fullscreen when  double clicked
+function fullScreen() {
+  video.webkitRequestFullScreen();
+}
+ 
+// create a function to play pause video when hitting spacebar
+function handleKeydown(e) {
+  if (e.keyCode === 32) {
+    togglePlay();
+  }
+}
+
+// create a function to speed up or slow down video when sliding the slider
+function handleProgress() {
+  const percent = (video.currentTime / video.duration) * 100;
+  progressBar.style.flexBasis = `${percent}%`;
+}
 
 
 // Hook up the event listeners
 video.addEventListener('click', togglePlay);
 toggle.addEventListener('click', togglePlay);
+ranges.forEach(range => range.addEventListener('change', handleRangeUpdate));
+ranges.forEach(range => range.addEventListener('mousemove', handleRangeUpdate));
+skipButtons.forEach(button => button.addEventListener('click', skip));
+
+// Hook up even listener for double click on screen
+player.addEventListener('dblclick', fullScreen);
+
+// hook up eventlistener for space bar
+window.addEventListener('keydown', handleKeydown);
+
+// hook up eventListener for video speed
+video.addEventListener('timeupdate', handleProgress);
+
 
 
 // change toggle icon when video is playing
