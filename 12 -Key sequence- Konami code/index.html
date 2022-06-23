@@ -23,7 +23,7 @@ window.addEventListener('keyup', (e)=> {
     // Checking starts from the last character "i" and goes backward -secretcode.length -1 
     // pressedKeys.length - secretCode.length = exact number of characters  we need
     pressedKeys.splice(-secretCode.length - 1, pressedKeys.length - secretCode.length);
-    // we join the array
+    // we join the array and match/include
     if(pressedKeys.join('').match(secretCode)){
          console.log("you got it!");
          //make it corny
