@@ -17,8 +17,16 @@ function debounce(func, wait = 20, immediate = true) {
  const sliderImages = document.querySelectorAll('.slide-in') 
 
  function checkSlide(e) {
-     console.log(e)
-     console.count(e)
+     /* console.log(e) */
+     console.count(e) 
+     sliderImages.forEach(sliderImage =>{
+         const slideInAt = (window.scrollY + window.innerHeight) - sliderImage.height / 2;
+
+         const imageBottom = sliderImage.offsetTop + sliderImage.height;
+         const isHalfShown = slideInAt > sliderImage.offsetTop;
+         console.log(isHalfShown)
+         
+        })
  }
 
 window.addEventListener('scroll',debounce(checkSlide)) 
