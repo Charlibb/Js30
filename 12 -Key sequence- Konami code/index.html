@@ -13,17 +13,24 @@
 
   <script>
       const pressedKeys = [];
-const secretCode = "konami";
+     const secretCode = "konami"; // it has 6 characters
 
-window.addEventListener('keydown', (e)=> {
-    console.log(e);
+window.addEventListener('keyup', (e)=> {
+    console.log(e.key);
     pressedKeys.push(e.key);
-    pressedKeys.splice(-secretCode.length - 1, pressed.length - secretCode.length);
-    if(pressedKeys.join('').includes(secretCode)){
+    console.log(pressedKeys) // it is a keylogger storing all keys pressed into an array ["k","o","n","a","m","i"]
+
+    // Checking starts from the last character "i" and goes backward -secretcode.length -1 
+    // pressedKeys.length - secretCode.length = exact number of characters  we need
+    pressedKeys.splice(-secretCode.length - 1, pressedKeys.length - secretCode.length);
+    // we join the array
+    if(pressedKeys.join('').match(secretCode)){
          console.log("you got it!");
+         //make it corny
          cornify_add()
+        
     }
-    console.log(pressedKeys)
+    
 })
   </script>
 </body>
