@@ -52,12 +52,17 @@
       <form class="add-items">
         <input type="text" name="item" placeholder="Item Name" required />
         <input type="submit" value="+ Add Item" />
-        <input type="submit" value="Remove Item" />
-      </form>
+    </form>
+    <form class="add-items">
+        
+        <input type="submit" value="- Remove Item" />
+    </form>
+    
     </div>
 
     <script>
       const addItems = document.querySelector(".add-items");
+      const removeItems = document.querySelector(".remove-items")
       const itemsList = document.querySelector(".plates");
       const items = JSON.parse(localStorage.getItem('items')) || [];
 
@@ -83,6 +88,19 @@
         this.reset(); // resets form to blank
       }
 
+      // remove item from list when checkbox is checked and remove from local storage 
+      /* function removeItem(e) {
+        e.preventDefault();
+        const item = this.querySelector("[name=item]").value;
+        const itemIndex = items.findIndex(function(item) {
+          return item.text === item;
+        });
+        items.splice(itemIndex, 1);
+        populateList(items, itemsList);
+        localStorage.setItem('items', JSON.stringify(items))
+      } */
+      
+////
       function populateList(plates = [], plateList) {
         plateList.innerHTML =  plates.map((plate, i) => {
             return `
@@ -106,6 +124,8 @@
 
 
       }
+
+      //
 
       addItems.addEventListener("submit", addItem);
       itemsList.addEventListener("click", toggleDone);
