@@ -3,9 +3,18 @@ const arrow = document.querySelector('.arrow');
 
 console.log('hello there ');
 
-navigator.geolocation.watchPosition((data) => {
-  console.log(data);
-});
+navigator.geolocation.watchPosition(
+  (data) => {
+    console.log(data);
+    speed.textContent = data.coords.speed;
+    arrow.style.transform = `rotate(${data.coords.heading}deg)`;
+  },
+  (err) => {
+    console.error(err);
+  }
+);
+
+// @TODO : FIX Geolocation not working on XCode / Safari / Chrome : Only secure origins allowed / [blocked] Access to geolocation was blocked over insecure connection to "external acces URLS"
 
 // find me button func https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API/Using_the_Geolocation_API
 
