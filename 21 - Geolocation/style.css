@@ -39,3 +39,7 @@ html {
   .units {
     font-size: 15px;
   }
+  button {
+    margin: 1.5rem 0;
+    
+  }
