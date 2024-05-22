@@ -15,8 +15,29 @@
   </div>
 
 
-<button></button>
+<button class="button">HIT ME</button>
 <script>
+
+  const divs = document.querySelectorAll("div");
+  const but = document.querySelector("button");
+
+function logText(e) {
+console.log(this.classList.value); 
+// e.stopPropagation(); // stops bubbling up!
+}
+
+divs.forEach(div => div.addEventListener("click",logText, {
+  capture: false,
+  once: false
+}))
+// capture :false default value; 
+
+but.addEventListener("click", logText, {
+  once: true
+})
+
+// once:true unbinds itself. (useful for checkout button, so it clicks just once)
+// once :true  === div.removeAddEventListener("click", logText)
 
 </script>
 </body>
