@@ -1,7 +1,12 @@
 let countdown;
+let endTimeTimestamp;
+
 const timerDisplay = document.querySelector('.display__time-left');
 const endTime = document.querySelector('.display__end-time');
 const buttons = document.querySelectorAll('[data-time]');
+const toggleTimeFormatBtn = document.getElementById('toggleTimeFormat');
+let is24HourFormat = false;
+toggleTimeFormatBtn.style.display = 'none';
 
 function timer(seconds) {
   // clear any existing timers
@@ -11,6 +16,9 @@ function timer(seconds) {
   const then = now + seconds * 1000;
   displayTimeLeft(seconds);
   displayEndTime(then);
+  toggleTimeFormatBtn.style.display = 'block';
+
+  endTimeTimestamp = then;
 
   countdown = setInterval(() => {
     const secondsLeft = Math.round((then - Date.now()) / 1000);
@@ -18,6 +26,8 @@ function timer(seconds) {
     if (secondsLeft < 0) {
       clearInterval(countdown);
       document.title = 'TIME´S UP!';
+      endTime.innerHTML = 'Time is up!';
+
       return;
     }
 
@@ -36,14 +46,32 @@ function displayTimeLeft(seconds) {
   timerDisplay.textContent = display;
 }
 
+toggleTimeFormatBtn.addEventListener('click', () => {
+  is24HourFormat = !is24HourFormat;
+  displayEndTime(endTimeTimestamp);
+  // Update the displayed time
+
+  if (is24HourFormat) {
+    toggleTimeFormatBtn.textContent = 'Use 12-Hour Format';
+  } else {
+    toggleTimeFormatBtn.textContent = 'Use 24-Hour Format';
+  }
+});
+
 function displayEndTime(timestamp) {
   const end = new Date(timestamp);
   const hour = end.getHours();
-  const adjustedHour = hour > 12 ? hour - 12 : hour;
+  let adjustedHour = hour;
+  if (!is24HourFormat) {
+    adjustedHour = hour > 12 ? hour - 12 : hour;
+  }
+
   const minutes = end.getMinutes();
+  const period = hour >= 12 ? 'PM' : 'AM';
+
   endTime.textContent = `Be Back At ${adjustedHour}:${
     minutes < 10 ? '0' : ''
-  }${minutes}`;
+  }${minutes} ${is24HourFormat ? '' : period}`;
 }
 
 function startTimer() {
